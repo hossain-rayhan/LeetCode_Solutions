@@ -1,3 +1,6 @@
+//Amazon Interview Question-- Use the HasMap or HashTable
+
+
 class Solution {
     public int[] twoSum(int[] nums, int target) {
         HashMap<Integer, Integer> map = new HashMap<>();
