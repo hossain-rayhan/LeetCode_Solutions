@@ -17,7 +17,11 @@ public class Codec {
     // Decodes your encoded data to tree.
     public TreeNode deserialize(String data) {
         String[] nodes = data.split(",");
-        return buildTree(nodes, 0);
+        
+        //System.out.println(Arrays.toString(nodes));
+        HashMap<String, Integer> map = new HashMap<String, Integer>();
+        map.put("index", 0);
+        return buildTree(nodes, map);
     }
     
     public String inOrderTraversal(TreeNode root){
@@ -32,13 +36,20 @@ public class Codec {
         }
     }
     
-    public TreeNode buildTree(String[] nodes, int index){
-        if(nodes[index].equals("null")){
+    //in recursive function, we cannot keep a global counter
+    //the solution is to maintain a key, value pair
+    public TreeNode buildTree(String[] nodes, HashMap<String, Integer> map){
+        int i = map.get("index");
+        if(nodes[i].equals("null")){
+            map.put("index", (i+1));
             return null;
         }else{
-            TreeNode n = new TreeNode(Integer.parseInt(nodes[index]));
-            TreeNode l = buildTree(nodes, index + 1);
-            TreeNode r = buildTree(nodes, index + 1);
+            TreeNode n = new TreeNode(Integer.parseInt(nodes[i]));
+            map.put("index", (i+1));
+            n.left = null;
+            n.right = null;
+            TreeNode l = buildTree(nodes, map);
+            TreeNode r = buildTree(nodes, map);
             n.left = l;
             n.right = r;
         
